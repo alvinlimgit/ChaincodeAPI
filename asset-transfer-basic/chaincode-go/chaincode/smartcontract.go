@@ -9,7 +9,7 @@ import (
         "strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
-        "github.com/hyperledger/fabric-chaincode-go/shim"
+        "github.com/hyperledger/fabric-chaincode-go/shim/"
         pb "github.com/hyperledger/fabric-protos-go/peer"
 )
 
@@ -30,7 +30,7 @@ type Asset struct {
 // Alvin addition. To use getHistoryForKey() METHOD, in ChaincodeStubInterface INTERFACE, in Shim PACKAGE. Function needs to exist in SMART CONTRACT.
 // /fabric-samples/asset-transfer-basic/chaincode-go/assetTransfer.go is the executable code, which imports chaincode (this file) & only runs main function
 // to initialize. Modular. Import other stuff from other repo, keep main executable code clean.
-func (s *SmartContract) getHistoryForAsset(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *SmartContract) AaaBbb(stub shim.ChaincodeStubInterface, args []string) pb.Response {
         if len(args) < 1 {
                 return shim.Error("Incorrect number of arguments. Expecting 1")
         }
