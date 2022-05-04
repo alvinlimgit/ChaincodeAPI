@@ -30,7 +30,7 @@ type Asset struct {
 // Alvin addition. To use getHistoryForKey() METHOD, in ChaincodeStubInterface INTERFACE, in Shim PACKAGE. Function needs to exist in SMART CONTRACT.
 // /fabric-samples/asset-transfer-basic/chaincode-go/assetTransfer.go is the executable code, which imports chaincode (this file) & only runs main function
 // to initialize. Modular. Import other stuff from other repo, keep main executable code clean.
-func (s *SmartContract) AaaBbb(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+func (s *SmartContract) AlvinGet(stub shim.ChaincodeStubInterface, args []string) pb.Response {
         if len(args) < 1 {
                 return shim.Error("Incorrect number of arguments. Expecting 1")
         }
@@ -98,7 +98,7 @@ func (s *SmartContract) AaaBbb(stub shim.ChaincodeStubInterface, args []string) 
 // InitLedger adds a base set of assets to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Color: "rainbow haha", Size: 5, Owner: "Tomoko", AppraisedValue: 300},
+		{ID: "asset1", Color: "bablabla", Size: 5, Owner: "Tomoko", AppraisedValue: 300},
 		{ID: "asset2", Color: "red", Size: 5, Owner: "Brad", AppraisedValue: 400},
 		{ID: "asset3", Color: "green", Size: 10, Owner: "Jin Soo", AppraisedValue: 500},
 		{ID: "asset4", Color: "yellow", Size: 10, Owner: "Max", AppraisedValue: 600},
