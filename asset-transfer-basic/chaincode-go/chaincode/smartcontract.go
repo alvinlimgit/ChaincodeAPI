@@ -9,7 +9,7 @@ import (
         "strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
-        "github.com/hyperledger/fabric-chaincode-go/shim/"
+        "github.com/hyperledger/fabric-chaincode-go/shim"
         pb "github.com/hyperledger/fabric-protos-go/peer"
 )
 
