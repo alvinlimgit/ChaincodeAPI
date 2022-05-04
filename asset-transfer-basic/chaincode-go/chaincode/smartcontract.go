@@ -3,8 +3,14 @@ package chaincode
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+        "bytes"
+        "time"
+        "strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+        "github.com/hyperledger/fabric-chaincode-go/shim"
+        pb "github.com/hyperledger/fabric-protos-go/peer"
 )
 
 // SmartContract provides functions for managing an Asset
@@ -19,6 +25,74 @@ type Asset struct {
 	Size           int    `json:"size"`
 	Owner          string `json:"owner"`
 	AppraisedValue int    `json:"appraisedValue"`
+}
+
+// Alvin addition. To use getHistoryForKey() METHOD, in ChaincodeStubInterface INTERFACE, in Shim PACKAGE. Function needs to exist in SMART CONTRACT.
+// /fabric-samples/asset-transfer-basic/chaincode-go/assetTransfer.go is the executable code, which imports chaincode (this file) & only runs main function
+// to initialize. Modular. Import other stuff from other repo, keep main executable code clean.
+func (s *SmartContract) getHistoryForAsset(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+        if len(args) < 1 {
+                return shim.Error("Incorrect number of arguments. Expecting 1")
+        }
+
+        assetName := args[0]
+
+        fmt.Printf("- start getHistoryForAsset: %s\n", assetName)
+
+        resultsIterator, err := stub.GetHistoryForKey(assetName)
+        if err != nil {
+                return shim.Error(err.Error())
+        }
+        defer resultsIterator.Close()
+
+        // buffer is a JSON array containing historic values for the asset
+        var buffer bytes.Buffer
+        buffer.WriteString("[")
+
+        bArrayMemberAlreadyWritten := false
+        for resultsIterator.HasNext() {
+                response, err := resultsIterator.Next()
+                if err != nil {
+                        return shim.Error(err.Error())
+                }
+
+                // Add a comma before array members, suppress it for the first array member
+                if bArrayMemberAlreadyWritten == true {
+                        buffer.WriteString(",")
+                }
+                buffer.WriteString("{\"TxId\":")
+                buffer.WriteString("\"")
+                buffer.WriteString(response.TxId)
+                buffer.WriteString("\"")
+
+                buffer.WriteString(", \"Value\":")
+                // if it was a delete operation on given key, then we need to set the
+                //corresponding value null. Else, we will write the response.Value
+                //as-is (as the Value itself a JSON asset)
+                if response.IsDelete {
+                        buffer.WriteString("null")
+                } else {
+                        buffer.WriteString(string(response.Value))
+                }
+
+                buffer.WriteString(", \"Timestamp\":")
+                buffer.WriteString("\"")
+                buffer.WriteString(time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String())
+		buffer.WriteString("\"")
+
+                buffer.WriteString(", \"IsDelete\":")
+                buffer.WriteString("\"")
+                buffer.WriteString(strconv.FormatBool(response.IsDelete))
+                buffer.WriteString("\"")
+
+                buffer.WriteString("}")
+                bArrayMemberAlreadyWritten = true
+        }
+        buffer.WriteString("]")
+
+        fmt.Printf("- getHistoryForAsset returning:\n%s\n", buffer.String())
+
+        return shim.Success(buffer.Bytes())
 }
 
 // InitLedger adds a base set of assets to the ledger
