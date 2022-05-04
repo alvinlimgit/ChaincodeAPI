@@ -2,11 +2,11 @@ package chaincode
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
-        "bytes"
-        "time"
-        "strconv"
+	//"fmt"
+	//"log"
+        //"bytes"
+        //"time"
+        //"strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
         //"github.com/hyperledger/fabric-chaincode-go/shim"
