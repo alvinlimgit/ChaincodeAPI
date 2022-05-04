@@ -3,14 +3,14 @@ package chaincode
 import (
 	"encoding/json"
 	"fmt"
-	//"log"
-        //"bytes"
-        //"time"
-        //"strconv"
+	"log"
+        "bytes"
+        "time"
+        "strconv"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
-        //"github.com/hyperledger/fabric-chaincode-go/shim"
-        //pb "github.com/hyperledger/fabric-protos-go/peer"
+        "github.com/hyperledger/fabric-chaincode-go/shim"
+        pb "github.com/hyperledger/fabric-protos-go/peer"
 )
 
 // SmartContract provides functions for managing an Asset
@@ -26,7 +26,7 @@ type Asset struct {
 	Owner          string `json:"owner"`
 	AppraisedValue int    `json:"appraisedValue"`
 }
-/*
+
 // Alvin addition. To use getHistoryForKey() METHOD, in ChaincodeStubInterface INTERFACE, in Shim PACKAGE. Function needs to exist in SMART CONTRACT.
 // /fabric-samples/asset-transfer-basic/chaincode-go/assetTransfer.go is the executable code, which imports chaincode (this file) & only runs main function
 // to initialize. Modular. Import other stuff from other repo, keep main executable code clean.
@@ -94,7 +94,7 @@ func (s *SmartContract) getHistoryForAsset(stub shim.ChaincodeStubInterface, arg
 
         return shim.Success(buffer.Bytes())
 }
-*/
+
 // InitLedger adds a base set of assets to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
