@@ -98,7 +98,7 @@ func (s *SmartContract) getHistoryForAsset(stub shim.ChaincodeStubInterface, arg
 // InitLedger adds a base set of assets to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	assets := []Asset{
-		{ID: "asset1", Color: "blue", Size: 5, Owner: "Tomoko", AppraisedValue: 300},
+		{ID: "asset1", Color: "rainbow haha", Size: 5, Owner: "Tomoko", AppraisedValue: 300},
 		{ID: "asset2", Color: "red", Size: 5, Owner: "Brad", AppraisedValue: 400},
 		{ID: "asset3", Color: "green", Size: 10, Owner: "Jin Soo", AppraisedValue: 500},
 		{ID: "asset4", Color: "yellow", Size: 10, Owner: "Max", AppraisedValue: 600},
