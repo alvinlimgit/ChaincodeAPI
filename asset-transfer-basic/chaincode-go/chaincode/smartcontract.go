@@ -2,7 +2,7 @@ package chaincode
 
 import (
 	"encoding/json"
-	//"fmt"
+	"fmt"
 	//"log"
         //"bytes"
         //"time"
